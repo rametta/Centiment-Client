@@ -7,7 +7,7 @@ export default class HomePage extends Component {
 		return (
 			<DocumentTitle title="Home">
 				<div>
-					<Chart />
+					
 				</div>
 			</DocumentTitle>
 		);
