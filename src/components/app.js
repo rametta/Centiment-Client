@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Link } from 'react-router';
 
 // Material UI Components
 import AppBar from 'material-ui/AppBar';
@@ -14,24 +15,40 @@ export default class App extends Component {
     super();
     injectTapEventPlugin();
     this.state = {
-      isDrawerVisible: false
+      isDrawerVisible: false,
+      menuItems: [
+        {path: '/', title: 'Home'},
+        {path: '/quiz', title: 'Quiz'}
+      ]
     }
+  }
+
+  toggleDrawer() {
+    const { isDrawerVisible } = this.state;
+    this.setState({ isDrawerVisible: !isDrawerVisible });
+  }
+
+  renderMenuItems() {
+    return this.state.menuItems.map((item, i) => {
+      return <Link to={item.path} key={i} onTouchTap={() => this.toggleDrawer()}><MenuItem>{item.title}</MenuItem></Link>
+    });
   }
 
   render() {
     const { isDrawerVisible } = this.state;
-    
+
     return (
       <MuiThemeProvider>
         <div>
           <AppBar
             title="YHacks 2016 - Client"
             iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onTouchTap={() => this.setState({ isDrawerVisible: !isDrawerVisible })}
+            onTouchTap={() => this.toggleDrawer()}
           />
           <Drawer open={isDrawerVisible}>
-            <MenuItem>Menu Item</MenuItem>
+            {this.renderMenuItems()}
           </Drawer>
+          {this.props.children}
         </div>
       </MuiThemeProvider>
     );
