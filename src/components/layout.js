@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import { indigo800 } from 'material-ui/styles/colors'; //#283593
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { Link } from 'react-router';
 
 // Material UI Components
@@ -8,6 +10,16 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
+
+const muiTheme = getMuiTheme({
+  palette: {
+    textColor: indigo800,
+  },
+  appBar: {
+    color: indigo800,
+    height: 50,
+  },
+});
 
 export default class Layout extends Component {
 
@@ -43,7 +55,7 @@ export default class Layout extends Component {
     const { isDrawerVisible } = this.state;
 
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <AppBar
             title="YHacks 2016 - Client"
