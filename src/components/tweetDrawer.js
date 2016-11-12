@@ -8,12 +8,14 @@ export default class TweetDrawer extends Component {
   renderTweets() {
     if(this.props.tweets == null) return;
     return this.props.tweets.data.tweets.map((tweet,i) => {
+      let date = new Date(tweet.date);
+      date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
       return (
         <Card key={i}>
           <CardHeader
             title={tweet.user_name}
-            subtitle={tweet.date}
-            avatar={tweet.pofile_img}
+            subtitle={date}
+            avatar={tweet.profile_img}
           />
           <CardText>{tweet.text}</CardText>
         </Card>

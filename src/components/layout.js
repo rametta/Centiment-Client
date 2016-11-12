@@ -62,7 +62,7 @@ export default class Layout extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
           <AppBar
-            title="YHacks 2016 - Client"
+            title='Centiment'
             iconClassNameRight="muidocs-icon-navigation-expand-more"
             onTouchTap={() => this.toggleDrawer()}
           />

@@ -3,6 +3,7 @@ import Axios from 'axios';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
+import CircularProgress from 'material-ui/CircularProgress';
 
 const YAHOO = 'https://query.yahooapis.com/v1/public/yql?q=';
 const YAHOO_END = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
@@ -11,7 +12,7 @@ const SERVER = 'https://shrouded-sands-52424.herokuapp.com/twitter?q=';
 export default class Search extends Component {
   constructor() {
     super();
-    this.state = { input: '' };
+    this.state = { input: '', error: '', loading: false };
   }
 
   onInputChange(e) {
@@ -26,11 +27,11 @@ export default class Search extends Component {
       .then(res => {
 
         // call 2 to our server for sentiment and tweets
-        Axios.get(`${SERVER}${ticker}`)
+        Axios.get(`${SERVER}${ticker}&lang=en`)
           .then(res2 => {
             // props is located in analysisPage.js
             this.props.addStock(Object.assign(res.data.query.results, res2)); 
-            this.setState({ input: '' });
+            this.setState({ input: '' , loading: false });
           })
           .catch(err2 => console.log('ERROR2:', err2))
 
@@ -49,7 +50,31 @@ export default class Search extends Component {
   }
 
   addStock() {
-    this.fetchData(this.state.input);
+    // validate user input then fetch data if it's' ok
+    const { input } = this.state;
+    if(input.length >= 2 && input.length <= 6){
+      this.setState({ loading: true });
+      this.fetchData(input);
+      return;
+    }
+    this.setState({error: 'Please indicate a valid ticker symbol'});
+  }
+
+  btn() {
+    return (
+      <FloatingActionButton
+        style={{marginTop: 15}}
+        backgroundColor="#283593"
+        onTouchTap={() => this.addStock()}>
+          <ContentAdd />
+      </FloatingActionButton>
+    )
+  }
+
+  loader() {
+    return (
+      <CircularProgress color="#283593" style={{marginTop: 15}}/>
+    )
   }
 
   render() {
@@ -69,12 +94,7 @@ export default class Search extends Component {
             />
           </div>
           <div className="col-xs-2" >
-            <FloatingActionButton
-              style={{marginTop: 15}}
-              backgroundColor="#283593"
-              onTouchTap={() => this.addStock()}>
-                <ContentAdd />
-            </FloatingActionButton>
+            {this.state.loading ? this.loader() : this.btn()}
           </div>
         </div>
       </div>
