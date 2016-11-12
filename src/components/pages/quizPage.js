@@ -23,7 +23,7 @@ var Submit = React.createClass({
 				<h2 >
 					Are you sure?
 				</h2>
-				<FlatButton label="SUBMIT" onclick={this.showResults()}/>
+				<FlatButton label="SUBMIT" />
 			</div>
 		);
 	}
@@ -82,9 +82,8 @@ export default class QuizPage extends Component {
 		return (
 			<DocumentTitle title="Quiz">
 				<div>
-					<div>Quiz Page</div>
 					<div className='container'>
-						<div class="row-fluid">
+						<div className="row-fluid">
 
 							<div className="col-md-10">
 								<div className='text-center'>
