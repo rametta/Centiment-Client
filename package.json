@@ -2,6 +2,7 @@
   "name": "yhacks16-client",
   "version": "1.0.0",
   "description": "YHacks-16 Client side",
+  "repository": "https://github.com/rametta/yhacks16-client",
   "main": "index.js",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
@@ -21,6 +22,7 @@
     "babel-preset-stage-1": "*",
     "material-ui": "^0.16.1",
     "react": "*",
+    "react-document-title": "^2.0.2",
     "react-dom": "*",
     "react-redux": "*",
     "react-router": "^3.0.0",

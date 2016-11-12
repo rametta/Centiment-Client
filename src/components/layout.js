@@ -9,7 +9,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 
-export default class App extends Component {
+export default class Layout extends Component {
 
   constructor() {
     super();
@@ -18,7 +18,8 @@ export default class App extends Component {
       isDrawerVisible: false,
       menuItems: [
         {path: '/', title: 'Home'},
-        {path: '/quiz', title: 'Quiz'}
+        {path: '/quiz', title: 'Quiz'},
+        {path: '/analysis', title: 'Analysis'}
       ]
     }
   }
@@ -30,7 +31,11 @@ export default class App extends Component {
 
   renderMenuItems() {
     return this.state.menuItems.map((item, i) => {
-      return <Link to={item.path} key={i} onTouchTap={() => this.toggleDrawer()}><MenuItem>{item.title}</MenuItem></Link>
+      return (
+        <Link to={item.path} key={i} onTouchTap={() => this.toggleDrawer()}>
+          <MenuItem>{item.title}</MenuItem>
+        </Link>
+      )
     });
   }
 
