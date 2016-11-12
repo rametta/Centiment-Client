@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 
 const YAHOO = 'https://query.yahooapis.com/v1/public/yql?q=';
 const YAHOO_END = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+const SERVER = 'https://shrouded-sands-52424.herokuapp.com/twitter?q=';
 
 export default class Search extends Component {
   constructor() {
@@ -18,14 +19,18 @@ export default class Search extends Component {
   }
 
   fetchData(ticker) {
-    const url = `${YAHOO}${encodeURI("select * from yahoo.finance.historicaldata where symbol = '" + ticker + "' and startDate = '" + this.getLastYear() + "' and endDate = '" + this.getToday()  + "'")}${YAHOO_END}`;
+    const historical = `${YAHOO}${encodeURI("select * from yahoo.finance.historicaldata where symbol = '" + ticker + "' and startDate = '" + this.getLastYear() + "' and endDate = '" + this.getToday()  + "'")}${YAHOO_END}`;
 
-    Axios.get(url)
+    Axios.get(historical)
       .then(res => {
         this.props.addStock(res.data.query.results); 
         this.setState({ input: '' });
       })
       .catch(err => console.log('ERROR:',err))
+
+    Axios.get(`${SERVER}${ticker}`)
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 
   getToday() {
