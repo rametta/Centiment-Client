@@ -36,11 +36,14 @@ export default class Layout extends Component {
     }
   }
 
+  // Shows/Hides the Drawer onClick
   toggleDrawer() {
     const { isDrawerVisible } = this.state;
     this.setState({ isDrawerVisible: !isDrawerVisible });
   }
 
+  // Renders menu items for the Drawer, with links
+  // to their respective page with react-router
   renderMenuItems() {
     return this.state.menuItems.map((item, i) => {
       return (
