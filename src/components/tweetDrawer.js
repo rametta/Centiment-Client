@@ -5,11 +5,6 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 
 export default class TweetDrawer extends Component {
 
-  constructor() {
-    super();
-    this.state = { isTweetsVisible: false };
-  }
-
   renderTweets() {
     return this.props.tweets.map(tweet => {
       return (
@@ -27,9 +22,9 @@ export default class TweetDrawer extends Component {
 
   render() {
     return (
-      <Drawer width={300} openSecondary open={this.state.isTweetsVisible} >
-        <AppBar title="Live Tweets" />
-        {this.renderTweets()}
+      <Drawer width={300} openSecondary open={this.props.isTweetVisible} >
+        <AppBar title="Live Tweets" onTouchTap={() => this.props.toggleTweetDrawer()} />
+        
       </Drawer>
     )
   }
