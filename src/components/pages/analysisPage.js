@@ -13,13 +13,13 @@ export default class AnalysisPage extends Component {
 
 	// Triggered when the button is clicked to add a new
   // stock by the user. Concats to state stock array
-  addStock(ticker) {
-    this.setState({ stocks: this.state.stocks.concat(ticker) });
+  addStock(data) {
+    this.setState({ stocks: this.state.stocks.concat(data) });
   }
 
 	renderStocks() {
 		return this.state.stocks.map((stock, i) => {
-			return <Card><Chart key={i} /></Card>;
+			return <Card key={i}><Chart data={stock} /></Card>;
 		});
 	}
 

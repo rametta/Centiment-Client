@@ -31,7 +31,8 @@ export default class Layout extends Component {
       menuItems: [
         {path: '/', title: 'Home'},
         {path: '/quiz', title: 'Quiz'},
-        {path: '/analysis', title: 'Analysis'}
+        {path: '/analysis', title: 'Analysis'},
+        {path: '/references', title: 'References'}
       ]
     }
   }

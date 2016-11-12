@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import jsonp from 'jsonp';
+import Axios from 'axios';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import TextField from 'material-ui/TextField';
 
-const NASDAQ_BASE = 'http://ws.nasdaqdod.com/v1/NASDAQAnalytics.asmx/GetEndOfDayData';
-const NASDAQ_TOKEN = 'BC2B181CF93B441D8C6342120EB0C971';
+const YAHOO = 'https://query.yahooapis.com/v1/public/yql?q=';
+const YAHOO_END = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
 
 export default class Search extends Component {
   constructor() {
@@ -18,18 +18,28 @@ export default class Search extends Component {
   }
 
   fetchData(ticker) {
-    const url = `${NASDAQ_BASE}?_Token=${NASDAQ_TOKEN}&Symbols=AAPL,FB&StartDate='02/11/2015'&EndDate='02/14/2015'`;
-    jsonp(url, Search.processResponse);
+    const url = `${YAHOO}${encodeURI("select * from yahoo.finance.historicaldata where symbol = '" + ticker + "' and startDate = '" + this.getLastYear() + "' and endDate = '" + this.getToday()  + "'")}${YAHOO_END}`;
+
+    Axios.get(url)
+      .then(res => {
+        this.props.addStock(res.data.query.results); 
+        this.setState({ input: '' });
+      })
+      .catch(err => console.log('ERROR:',err))
   }
 
-  static processResponse = res => {
-    console.log(res);
+  getToday() {
+    const t = new Date();
+    return `${t.getFullYear()}-${t.getMonth()+1}-${t.getDate()}`;
+  }
+  
+  getLastYear() {
+    const t = new Date();
+    return `${t.getFullYear()-1}-${t.getMonth()+1}-${t.getDate()}`;
   }
 
   addStock() {
     this.fetchData(this.state.input);
-    this.props.addStock(this.state.input);
-    this.setState({ input: '' });
   }
 
   render() {
@@ -50,7 +60,7 @@ export default class Search extends Component {
           </div>
           <div className="col-xs-2" >
             <FloatingActionButton
-              style={{marginTop: '15'}}
+              style={{marginTop: 15}}
               backgroundColor="#283593"
               onTouchTap={() => this.addStock()}>
                 <ContentAdd />
