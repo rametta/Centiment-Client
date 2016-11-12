@@ -10,7 +10,7 @@ export default class AnalysisPage extends Component {
 
 	constructor() {
 		super();
-		this.state = { stocks: [], isTweetVisible: false };
+		this.state = { stocks: [], isTweetVisible: false, selectedTweets: -1 };
 	}
 
 	// Triggered when the button is clicked to add a new
@@ -20,8 +20,8 @@ export default class AnalysisPage extends Component {
     this.setState({ stocks: this.state.stocks.concat(data) });
   }
 
-	toggleTweetDrawer() {
-		this.setState({isTweetVisible: !this.state.isTweetVisible})
+	toggleTweetDrawer(i) {
+		this.setState({isTweetVisible: !this.state.isTweetVisible, selectedTweets: i})
 	}
 
 	renderStocks() {
@@ -29,7 +29,7 @@ export default class AnalysisPage extends Component {
 			return (
 				<Card key={i}>
 					<Chart data={stock}/>
-					<FlatButton onTouchTap={()=> this.toggleTweetDrawer()} label="Tweets" />
+					<FlatButton onTouchTap={()=> this.toggleTweetDrawer(i)} label="Tweets" />
 				</Card>
 			);
 		});
@@ -40,6 +40,7 @@ export default class AnalysisPage extends Component {
 			<DocumentTitle title="Analysis">
 				<div>
 					<TweetDrawer 
+						tweets={this.state.stocks[this.state.selectedTweets]}
 						isTweetVisible={this.state.isTweetVisible} 
 						toggleTweetDrawer={() => this.toggleTweetDrawer()}
 					/>
