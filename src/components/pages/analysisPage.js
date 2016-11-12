@@ -3,6 +3,7 @@ import DocumentTitle from 'react-document-title';
 import Search from '../search';
 import Card from '../card';
 import Chart from '../chart';
+import TweetDrawer from '../tweetDrawer';
 
 export default class AnalysisPage extends Component {
 
@@ -28,6 +29,7 @@ export default class AnalysisPage extends Component {
 		return (
 			<DocumentTitle title="Analysis">
 				<div>
+					<TweetDrawer />
 					<Search addStock={ticker => this.addStock(ticker)}/>
 					{this.renderStocks()}
 				</div>
