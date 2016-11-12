@@ -33,6 +33,7 @@ export default class MoneyList extends Component {
 		return arr.map(a => {
 			return (
 				<ListItem
+					key={a}
 					primaryText={"$" + (100 * (a+1)).toString()}
 					innerDivStyle={style.inner}
 					style={style.item}

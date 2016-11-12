@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import FlatButton from 'material-ui/FlatButton';
 import MoneyList from '../moneyList';
+import QuestionLayout from '../questionLayout';
 
 const style = {
 	"buttons":{
@@ -10,20 +11,28 @@ const style = {
 		'width': '100%', 
 		'height': 40
 	},
+	"triangleLeft": {
+	    height: 0,
+	    width: 0,
+	    borderRight: "100px solid green",
+	    borderTop: "100px solid transparent",
+	    borderBottom: "100px solid transparent",
+	    backgroundColor: "black"
+	},
 	"title":
 	{
 		'margin': 40
 	}
 }
 
-var Submit = React.createClass({
+var Result = React.createClass({
 	render(){
 		return (
 			<div className='text-center' style={style.title}>
 				<h2 >
-					Are you sure?
+
 				</h2>
-				<FlatButton label="SUBMIT" />
+				<FlatButton label={this.props.correct? "next": "restart"} />
 			</div>
 		);
 	}
@@ -44,13 +53,33 @@ var Prompt = React.createClass({
 export default class QuizPage extends Component {
 	constructor(props){
 		super(props);
+		var data = this.getData();
 		this.state = {
 			answer:0,
 			question: "question one",
 			selected:-1,
 			answers:['a', 'b', 'c', 'd'],
-			questionNumber: 1
+			questionNumber: 0
 		}
+
+		this.pickAnswer = this.pickAnswer.bind(this);
+	}
+
+	getData(){
+			data:[
+				{
+					answer:0,
+					question: "question one",
+					selected:-1,
+					answers:['a', 'b', 'c', 'd'],
+				},
+				{
+					answer:0,
+					question: "question TWO",
+					selected:-1,
+					answers:['a', 'b', 'c', 'd'],
+				}
+			]
 	}
 
 	pickAnswer(num){
@@ -69,15 +98,6 @@ export default class QuizPage extends Component {
 		return false;
 	}
 
-	renderQuestions(){
-		return this.state.answers.map((answer, i) => {
-			return (
-				<div className="col-md-offset-1 col-md-5" key={i}>
-					<FlatButton style={style.buttons} backgroundColor={this.setBackground(i)} hoverColor='#ff4d4d' label={answer} onClick={() => this.pickAnswer(i)} />
-				</div>)
-		})
-	}
-
 	render() {
 		return (
 			<DocumentTitle title="Quiz">
@@ -86,15 +106,9 @@ export default class QuizPage extends Component {
 						<div className="row-fluid">
 
 							<div className="col-md-10">
-								<div className='text-center'>
-									<h5>For a thousand dollars</h5>
-								</div>
-								<div style={style.title} className='text-center'>
-									<h1>Question ONE</h1>
-								</div>
-								{this.renderQuestions()}
+								<QuestionLayout question={this.state.question} answers={this.state.answers} pickAnswer={this.pickAnswer} />
 
-								{this.answerSelected() ? <Submit />: <Prompt />}
+								{this.answerSelected() ? <Result correct={this.state.selected == this.state.answer} />: <Prompt />}
 							</div>
 
 							<div className="col-md-2 hidden-xs">
