@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import Chart from '../chart';
 import Logo from '../logo';
+import DialogModal from '../dialogModal';
 
 export default class HomePage extends Component {
 	render() {
@@ -9,6 +10,7 @@ export default class HomePage extends Component {
 			<DocumentTitle title="Home">
 				<div>
 					<Logo />
+					<DialogModal />
 				</div>
 			</DocumentTitle>
 		);
