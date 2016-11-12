@@ -9,6 +9,12 @@ import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import FlatButton from 'material-ui/FlatButton';
+import Toggle from 'material-ui/Toggle';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import NavigationClose from 'material-ui/svg-icons/navigation/close';
 
 
 const muiTheme = getMuiTheme({
@@ -21,6 +27,27 @@ const muiTheme = getMuiTheme({
   },
 });
 
+class Login extends Component {
+  static muiName = 'FlatButton';
+
+  render() {
+    return (
+      <FlatButton {...this.props} label="Login" />
+    );
+  }
+}
+
+const Logged = (props) => (
+  <IconMenu
+    {...props}
+    iconButtonElement={ <IconButton><MoreVertIcon /></IconButton>}
+    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+  >
+    <MenuItem primaryText="Sign out" />
+  </IconMenu>
+);
+
 export default class Layout extends Component {
 
   constructor() {
@@ -28,6 +55,7 @@ export default class Layout extends Component {
     injectTapEventPlugin();
     this.state = {
       isDrawerVisible: false,
+      isLoggedIn: false,
       menuItems: [
         {path: '/', title: 'Home'},
         {path: '/quiz', title: 'Quiz'},
@@ -37,7 +65,7 @@ export default class Layout extends Component {
     }
   }
 
-  // Shows/Hides the Drawer onClick
+  // Shows/Hides the left hand side drawer onClick
   toggleDrawer() {
     const { isDrawerVisible } = this.state;
     this.setState({ isDrawerVisible: !isDrawerVisible });
@@ -63,8 +91,9 @@ export default class Layout extends Component {
         <div>
           <AppBar
             title='Centiment'
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-            onTouchTap={() => this.toggleDrawer()}
+            iconElementRight={this.state.logged ? <Logged /> : <Login />}
+            onLeftIconButtonTouchTap={() => this.toggleDrawer()}
+            onTitleTouchTap={() => this.setState({isDrawerVisible: false})}
           />
           <Drawer open={isDrawerVisible}>
             {this.renderMenuItems()}

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-//import TextField from 'material-ui/TextField';
 import AutoComplete from 'material-ui/AutoComplete';
 import CircularProgress from 'material-ui/CircularProgress';
 import TICKERS from '../symbols';
