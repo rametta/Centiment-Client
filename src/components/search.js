@@ -21,16 +21,21 @@ export default class Search extends Component {
   fetchData(ticker) {
     const historical = `${YAHOO}${encodeURI("select * from yahoo.finance.historicaldata where symbol = '" + ticker + "' and startDate = '" + this.getLastYear() + "' and endDate = '" + this.getToday()  + "'")}${YAHOO_END}`;
 
+    // call 1 to yahoo for historical data
     Axios.get(historical)
       .then(res => {
-        this.props.addStock(res.data.query.results); 
-        this.setState({ input: '' });
+
+        // call 2 to our server for sentiment and tweets
+        Axios.get(`${SERVER}${ticker}`)
+          .then(res2 => {
+            // props is located in analysisPage.js
+            this.props.addStock(Object.assign(res.data.query.results, res2)); 
+            this.setState({ input: '' });
+          })
+          .catch(err2 => console.log('ERROR2:', err2))
+
       })
       .catch(err => console.log('ERROR:',err))
-
-    Axios.get(`${SERVER}${ticker}`)
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
   }
 
   getToday() {

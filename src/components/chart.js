@@ -54,8 +54,6 @@ export default class Chart extends Component {
 
       Object.assign(a, this.state.default);
 
-      console.log(a);
-
       a.labels = labels;
       a.datasets[0].data = data;
       a.datasets[0].label = label;
