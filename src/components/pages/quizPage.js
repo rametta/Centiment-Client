@@ -3,6 +3,7 @@ import DocumentTitle from 'react-document-title';
 import FlatButton from 'material-ui/FlatButton';
 import MoneyList from '../moneyList';
 import QuestionLayout from '../questionLayout';
+import Logo from '../logo';
 
 const style = {
 	"buttons":{
@@ -22,6 +23,13 @@ const style = {
 	"title":
 	{
 		'margin': 40
+	},
+	"logo": {
+		position: 'relative'
+	},
+	"questionLayout": {
+		width: "100%",
+		textAlign: "center"
 	}
 }
 
@@ -100,24 +108,28 @@ export default class QuizPage extends Component {
 
 	render() {
 		return (
-			<DocumentTitle title="Quiz">
-				<div>
-					<div className='container'>
-						<div className="row-fluid">
+			<div>
+				<DocumentTitle title="Quiz">
+					<div>
+						<div className='container'>
+							<div className="row-fluid">
 
-							<div className="col-md-10">
-								<QuestionLayout question={this.state.question} answers={this.state.answers} pickAnswer={this.pickAnswer} />
+								<div className="col-md-8">
+									<div><Logo style={style.logo} /></div>
 
-								{this.answerSelected() ? <Result correct={this.state.selected == this.state.answer} />: <Prompt />}
-							</div>
+									<div style={style.questionLayout}><QuestionLayout question={this.state.question} answers={this.state.answers} pickAnswer={this.pickAnswer} /></div>
 
-							<div className="col-md-2 hidden-xs">
-								<MoneyList question="5"/>
+									{this.answerSelected() ? <Result correct={this.state.selected == this.state.answer} />: <Prompt />}
+								</div>
+
+								<div style={{"position":"absolute","right":"0","paddingRight": "0"}} className="col-md-4 hidden-xs">
+									<MoneyList question="5"/>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</DocumentTitle>
+				</DocumentTitle>
+			</div>
 		)
 	}
 }	

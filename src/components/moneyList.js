@@ -7,9 +7,11 @@ const style={
 		'backgroundColor': 'white'
 	},
 	"inner": {
-		'padding': '8px',
-		'textAlign': 'center'
-	}
+		'padding': '15px',
+		'textAlign': 'center',
+		'fontSize': '30px'
+	},
+	"marginTop": "15px"
 }
 
 export default class MoneyList extends Component {
@@ -22,7 +24,7 @@ export default class MoneyList extends Component {
 
 	checkQuestion(num){
 		if (num == this.state.question){
-			return {'backgroundColor': 'red'}
+			return {'backgroundColor': '#ff9933'}
 		}
 		return {'backgroundColor': 'white'}
 	}

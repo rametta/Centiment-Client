@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 
+
 const styles = {
+	"questionLayoutChild": {
+		width: "80%"
+	},
 	'fill': 'none',
 	'stroke': '#231f20',
-	'stroke-miterlimit': 10
+	'strokeMiterlimit': 10
 }
 
 export default class ReferencePage extends Component {
 	render() {
 		return (
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 392.17 150.48">
+			<svg style={styles.questionLayoutChild} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 392.17 150.48">
 			  <defs>
 
 			  </defs>
