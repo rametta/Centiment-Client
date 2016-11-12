@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import FlatButton from 'material-ui/FlatButton';
-import MoneyList from './moneyList';
+import MoneyList from '../moneyList';
 
 const style = {
 	"buttons":{
