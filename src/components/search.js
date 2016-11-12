@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import Axios from 'axios';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TextField from 'material-ui/TextField';
+//import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 import CircularProgress from 'material-ui/CircularProgress';
+import TICKERS from '../symbols';
 
 const YAHOO = 'https://query.yahooapis.com/v1/public/yql?q=';
 const YAHOO_END = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
@@ -12,11 +14,18 @@ const SERVER = 'https://shrouded-sands-52424.herokuapp.com/twitter?q=';
 export default class Search extends Component {
   constructor() {
     super();
-    this.state = { input: '', error: '', loading: false };
+    this.state = { input: '', error: '', loading: false, symbols: [] };
   }
 
-  onInputChange(e) {
-    this.setState({ input: e.target.value });
+  componentDidMount() {
+    console.log(TICKERS);
+    const symbols = TICKERS.module.map(ticker => ticker.Symbol);
+    this.setState({ symbols });
+  }
+
+  onInputChange(input) {
+    this.setState({ input });
+    this.addStock(input);
   }
 
   fetchData(ticker) {
@@ -49,9 +58,9 @@ export default class Search extends Component {
     return `${t.getFullYear()-1}-${t.getMonth()+1}-${t.getDate()}`;
   }
 
-  addStock() {
+  addStock(input = this.state.input) {
     // validate user input then fetch data if it's' ok
-    const { input } = this.state;
+    //const { input } = this.state;
     if(input.length >= 2 && input.length <= 6){
       this.setState({ loading: true });
       this.fetchData(input);
@@ -82,15 +91,20 @@ export default class Search extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-xs-9 col-sm-offset-3">
-            <TextField
+
+            <AutoComplete
               hintText="Ex. AAPL"
               fullWidth
               value={this.state.input}
-              onChange={e => this.onInputChange(e)}
+              floatingLabelText="Enter a Stock Symbol"
+              errorText={this.state.error}
+              onNewRequest={this.onInputChange}
+              filter={AutoComplete.fuzzyFilter}
+              dataSource={this.state.symbols}
+              maxSearchResults={7}
               underlineStyle={{borderColor: '#283593'}}
               underlineFocusStyle={{borderColor: '#81a9ea'}}
               floatingLabelFocusStyle={{color: '#283593'}}
-              floatingLabelText="Enter a Stock Symbol"
             />
           </div>
           <div className="col-xs-2" >
