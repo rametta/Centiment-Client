@@ -18,14 +18,8 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    console.log(TICKERS);
     const symbols = TICKERS.module.map(ticker => ticker.Symbol);
     this.setState({ symbols });
-  }
-
-  onInputChange(input) {
-    this.setState({ input });
-    this.addStock(input);
   }
 
   fetchData(ticker) {
@@ -59,11 +53,9 @@ export default class Search extends Component {
   }
 
   addStock(input = this.state.input) {
-    // validate user input then fetch data if it's' ok
-    //const { input } = this.state;
     if(input.length >= 2 && input.length <= 6){
-      this.setState({ loading: true });
       this.fetchData(input);
+      this.setState({ error: "", input: "", loading: true });
       return;
     }
     this.setState({error: 'Please indicate a valid ticker symbol'});
@@ -98,7 +90,8 @@ export default class Search extends Component {
               value={this.state.input}
               floatingLabelText="Enter a Stock Symbol"
               errorText={this.state.error}
-              onNewRequest={this.onInputChange}
+              onNewRequest={value => this.addStock(value)}
+              onUpdateInput={input => this.setState({input})}
               filter={AutoComplete.fuzzyFilter}
               dataSource={this.state.symbols}
               maxSearchResults={7}
