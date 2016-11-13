@@ -64,7 +64,6 @@ export default class QuizPage extends Component {
 		super(props);
 		
 		this.correct = false;
-		
 
 		this.pickAnswer = this.pickAnswer.bind(this);
 		this.nextQuestion = this.nextQuestion.bind(this);
@@ -74,8 +73,8 @@ export default class QuizPage extends Component {
 			data: [],
 			questionNumber: 0,
 			showResult: false,
-			done: false,
-			ready:false
+			ready:false,
+			selected: -1
 		} 
 	}
 
@@ -85,7 +84,9 @@ export default class QuizPage extends Component {
 	}
 
 	nextQuestion(){
-		this.setState({questionNumber: this.state.questionNumber + 1});
+		this.setState({questionNumber: this.state.questionNumber + 1,
+					'showResult': false,
+					'selected': -1});
 		console.log('next');
 	}
 
@@ -128,7 +129,8 @@ export default class QuizPage extends Component {
 		if (this.correct && this.state.questionNumber == 1){
 			browserHistory.push('/congrats');
 		}
-		this.setState({showResult: true});
+		this.setState({showResult: true,
+						selected: num});
 	}
 
 	setBackground(num){
@@ -157,7 +159,7 @@ export default class QuizPage extends Component {
 								<div className="col-md-10">
 									<Logo />
 
-									<QuestionLayout question={question} answers={answers} pickAnswer={this.pickAnswer} />
+									<QuestionLayout question={question} correct={this.correct} selected={this.state.selected > -1 ? this.state.selected: null} answers={answers} pickAnswer={this.pickAnswer} />
 									<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
 
 								</div>

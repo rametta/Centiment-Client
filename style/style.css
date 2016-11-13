@@ -131,7 +131,15 @@ text:hover{
     fill: #22f95f;
 }
 
+.green{
+    fill: #22f95f;
+}
+
 #red {
+    fill: #f92d22;
+}
+
+.red{
     fill: #f92d22;
 }
 

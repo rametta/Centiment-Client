@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 
 export default class ReferencePage extends Component {
+
+	constructor(props){
+		super(props);
+		this.states = {
+			'submitted': false
+		}
+	}
+
 	render() {
 		return (
 				<svg id="quiz" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550.28 180.48">
@@ -19,7 +27,7 @@ export default class ReferencePage extends Component {
 				  <text onClick={()=>{this.props.pickAnswer(1)}}  transform="translate(273.44 83.72)">B. {this.props.answers[1]}</text>
 				  <text onClick={()=>{this.props.pickAnswer(2)}}  transform="translate(117.89 10.07)">C. {this.props.answers[2]}</text>
 				  <polygon id="question" points="57.17 1.94 420.28 1.94 476.21 25.75 420.28 51.37 57.17 51.37 1.24 26.65 57.17 1.94"/>
-				  <text class="questionLabel" transform="translate(37.49 31.4)">{this.props.question}</text>
+				  <text className="questionLabel" transform="translate(37.49 31.4)">{this.props.question}</text>
 				</svg>
 		);
 	}
