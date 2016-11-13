@@ -132,7 +132,7 @@ text:hover{
 }
 
 .green{
-    fill: #22f95f;
+    fill: #22f95f !important;
 }
 
 #red {
@@ -140,7 +140,7 @@ text:hover{
 }
 
 .red{
-    fill: #f92d22;
+    fill: #f92d22 !important;
 }
 
 .jumbotron-image {

@@ -160,6 +160,9 @@ export default class QuizPage extends Component {
 					<div style={style.background}>
 						<div className='container'>
 							<div className="row-fluid">
+								<img src="../images/phone.png" />
+							</div>
+							<div className="row-fluid">
 
 								<div className="col-md-12">
 									<Logo />
