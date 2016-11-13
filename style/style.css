@@ -171,3 +171,7 @@ text:hover{
     margin-top: 12px;
     margin-bottom: 12px;
 }
+
+.imgRef{
+    height: 200px;
+}
