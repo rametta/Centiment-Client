@@ -78,22 +78,17 @@ export default class QuizPage extends Component {
 	}
 
 	componentWillMount() {
-		console.log('this.state wil mount: ', this.state);
 		this.getData();
 	}
 
 	nextQuestion(){
 		this.setState({questionNumber: this.state.questionNumber + 1, 'selected': -1});
-		console.log('next');
 	}
 
 	getData(){
-		console.log('calling axios');
 		axios.get('http://109.228.59.45:8443/questions')
 			.then((response) => {
-				this.setState({data: response.data, ready: true}, function(){
-					console.log("response: ", this.state.data);
-				});
+				this.setState({data: response.data, ready: true});
 			})
 			.catch((error) => {
 				console.log('error:', error);
@@ -116,10 +111,9 @@ export default class QuizPage extends Component {
 	}
 
 	pickAnswer(num){
-		console.log(num);
 		this.correct = num == this.state.data[this.state.questionNumber].answer;
 
-		if (this.correct && this.state.questionNumber == 12){
+		if (this.correct && this.state.questionNumber == (this.state.data.length-1)){
 			browserHistory.push('/congrats');
 		}
 
@@ -147,7 +141,6 @@ export default class QuizPage extends Component {
 	render() {
 
 		if (this.state.ready){
-			console.log('current question: ', this.state.data[this.state.questionNumber]);
 			var answers = this.state.data[this.state.questionNumber].choices;
 			var question = this.state.data[this.state.questionNumber].question;
 			return (
