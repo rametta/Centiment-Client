@@ -14,6 +14,14 @@ export default class QueestionLayout extends Component {
 		this.setState({'submitted': true});
 	}
 
+	componentWillUpdate(nextProps, nextState){
+		console.log(nextProps);
+		console.log(nextState);
+		if (this.setState.submitted){
+			this.setState({'submitted': false})
+		}
+	}
+
 	getClassNames(num){
 		if (this.state.submitted){
 			if (num == this.props.selected){
