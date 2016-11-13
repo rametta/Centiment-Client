@@ -58,20 +58,7 @@ const style = {
 		'margin':40,
 		'paddingLeft': 30
 	}
-}
-
-var Result = React.createClass({
-
-	render(){
-		return (this.props.visible == 'hidden') ? null :
-		(
-			<div className='text-center' style={style.lower_button}>
-				<FlatButton label={this.props.correct? "next": "restart"} onClick={this.props.correct? ()=>{this.props.nextQuestion()} : ()=>{this.props.restart()}} 
-					style={this.props.correct? style.next : style.restart} />
-			</div>
-		);
-	}
-})
+} 
 
 export default class QuizPage extends Component {
 	constructor(props){
@@ -80,12 +67,10 @@ export default class QuizPage extends Component {
 		this.correct = false;
 		this.pickAnswer = this.pickAnswer.bind(this);
 		this.nextQuestion = this.nextQuestion.bind(this);
-		this.restart = this.restart.bind(this);
 
 		this.state = {
 			data: [],
 			questionNumber: 0,
-			showResult: false,
 			selected: -1,
 			ready:false,
 			openMoneyDrawer: false
@@ -98,13 +83,8 @@ export default class QuizPage extends Component {
 	}
 
 	nextQuestion(){
-		this.setState({questionNumber: this.state.questionNumber + 1, 'showResult': false, 'selected': -1});
+		this.setState({questionNumber: this.state.questionNumber + 1, 'selected': -1});
 		console.log('next');
-	}
-
-	restart(){
-		this.setState({questionNumber: 0});
-		console.log('restart');
 	}
 
 	getData(){
@@ -139,18 +119,18 @@ export default class QuizPage extends Component {
 		console.log(num);
 		this.correct = num == this.state.data[this.state.questionNumber].answer;
 
-		if (this.correct && this.state.questionNumber == this.state.data.length - 1){
+		if (this.correct && this.state.questionNumber == 12){
 			browserHistory.push('/congrats');
 		}
 
-		this.setState({showResult: true, selected: num});
+		this.setState({selected: num});
 
 
 		// open money drawer
 		this.openDrawer();
 
 		const interval = setInterval(() => {
-			this.correct ? this.nextQuestion() : this.setState({ questionNumber :0, select: -1 });
+			this.correct ? this.nextQuestion() : this.setState({ questionNumber :0, selected: -1 });
 			clearInterval(interval);
 		}, 2000);
 	}
@@ -188,7 +168,6 @@ export default class QuizPage extends Component {
 									<Logo />
 
 									<QuestionLayout question={question} correct={this.correct} selected={this.state.selected > -1 ? this.state.selected: null} answers={answers} pickAnswer={this.pickAnswer} />
-									<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
 								</div>
 								<QuizDrawer open={this.state.openMoneyDrawer} questionNumber={this.state.questionNumber}></QuizDrawer>
 							</div>
