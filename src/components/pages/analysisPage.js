@@ -47,17 +47,17 @@ export default class AnalysisPage extends Component {
 			const ema26 = this.getEMA(values, 26);
 			const ema12 = this.getEMA(values, 12);
 			const ema9 = this.getEMA(values, 9)
-			const macd = ema26 - ema12;
-			const ppo = (ema9-ema26)/ema26;
+			const macd = (ema26 - ema12).toFixed(2);
+			const ppo = (((ema9-ema26)/ema26)*100).toFixed(2);
+			const arrow = macd > 0 ? '/style/arrowUp.svg' : '/style/arrowDown.svg';
 			
 			return (
 				<Card key={i}>
 					<div>
-						Sentiment: {parseFloat(stock.data.sentiment).toFixed(3)} 
-						&nbsp;
-						MACD: {macd.toFixed(3)} 
-						&nbsp;
-						PPO: {ppo.toFixed(3)}
+						Sentiment: {parseFloat(stock.data.sentiment).toFixed(3)} &nbsp;
+						PPO: {ppo} &nbsp;
+						MACD: {macd} &nbsp;
+						<img src={arrow} className="arrow"/>
 					</div>
 					<Chart data={stock}/>
 					<FlatButton onTouchTap={()=> this.toggleTweetDrawer(i)} label="Tweets" />

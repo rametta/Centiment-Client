@@ -85,7 +85,6 @@ export default class Search extends Component {
             <AutoComplete
               hintText="Ex. AAPL"
               fullWidth
-              value={this.state.input}
               floatingLabelText="Enter a Stock Symbol"
               errorText={this.state.error}
               onNewRequest={value => this.addStock(value)}

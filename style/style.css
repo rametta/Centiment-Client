@@ -17,6 +17,10 @@ body {
     height: 100%;
 }
 
+.imgRef{
+    height: 200px;
+}
+
 .logo {
     width: 220px;
     height: 220px;
@@ -172,6 +176,7 @@ text:hover{
     margin-bottom: 12px;
 }
 
-.imgRef{
-    height: 200px;
+
+.arrow {
+    height: 10px;
 }
