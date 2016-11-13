@@ -82,7 +82,6 @@ export default class Search extends Component {
       <div className="container">
         <div className="row">
           <div className="col-sm-6 col-xs-9 col-sm-offset-3">
-
             <AutoComplete
               hintText="Ex. AAPL"
               fullWidth

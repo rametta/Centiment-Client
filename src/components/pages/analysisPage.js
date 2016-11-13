@@ -4,13 +4,18 @@ import Search from '../search';
 import Card from '../card';
 import Chart from '../chart';
 import TweetDrawer from '../tweetDrawer';
+import HeadlinesDrawer from '../headlinesDrawer';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class AnalysisPage extends Component {
 
 	constructor() {
 		super();
-		this.state = { stocks: [], isTweetVisible: false, selectedTweets: -1 };
+		this.state = { 
+			stocks: [], selectedSymbol: '',
+			isTweetVisible: false, isHeadlinesVisible: false,
+			selectedTweets: -1 , selectedHeadlines: -1
+		};
 	}
 
 	// Triggered when the button is clicked to add a new
@@ -23,12 +28,17 @@ export default class AnalysisPage extends Component {
 		this.setState({isTweetVisible: !this.state.isTweetVisible, selectedTweets: i})
 	}
 
+	toggleHeadlinesDrawer(stock) {
+		this.setState({isHeadlinesVisible: !this.state.isHeadlinesVisible, selectedSymbol: stock.quote[0].Symbol});
+	}
+
 	renderStocks() {
 		return this.state.stocks.map((stock, i) => {
 			return (
 				<Card key={i}>
 					<Chart data={stock}/>
 					<FlatButton onTouchTap={()=> this.toggleTweetDrawer(i)} label="Tweets" />
+					<FlatButton onTouchTap={()=> this.toggleHeadlinesDrawer(stock)} label="Headlines" />
 				</Card>
 			);
 		});
@@ -42,6 +52,11 @@ export default class AnalysisPage extends Component {
 						tweets={this.state.stocks[this.state.selectedTweets]}
 						isTweetVisible={this.state.isTweetVisible} 
 						toggleTweetDrawer={() => this.toggleTweetDrawer()}
+					/>
+					<HeadlinesDrawer 
+						symbol={this.state.selectedSymbol}
+						isHeadlinesVisible={this.state.isHeadlinesVisible} 
+						toggleHeadlinesDrawer={() => this.toggleHeadlinesDrawer()}
 					/>
 					<Search addStock={ticker => this.addStock(ticker)}/>
 					{this.renderStocks()}
