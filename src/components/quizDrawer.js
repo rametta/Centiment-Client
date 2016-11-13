@@ -10,11 +10,13 @@ export default class QuizDrawer extends Component {
       open: false,
       activeIndex: 12
     }
+
+    this.renderScore = this.renderScore.bind(this);
   }
 
   componentWillUpdate(nextProps, nextState) {
     if (this.props.questionNumber !== nextProps.questionNumber) {
-      this.setState({activeIndex: this.state.activeIndex - 1});
+      this.setState({activeIndex: 12 - nextProps.questionNumber });
     }
   }
 

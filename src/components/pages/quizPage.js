@@ -139,7 +139,7 @@ export default class QuizPage extends Component {
 		console.log(num);
 		this.correct = num == this.state.data[this.state.questionNumber].answer;
 
-		if (this.correct && this.state.questionNumber == 1){
+		if (this.correct && this.state.questionNumber == this.state.data.length - 1){
 			browserHistory.push('/congrats');
 		}
 
@@ -148,6 +148,11 @@ export default class QuizPage extends Component {
 
 		// open money drawer
 		this.openDrawer();
+
+		const interval = setInterval(() => {
+			this.correct ? this.nextQuestion() : this.setState({ questionNumber :0, select: -1 });
+			clearInterval(interval);
+		}, 2000);
 	}
 
 	openDrawer() {
@@ -185,7 +190,7 @@ export default class QuizPage extends Component {
 									<QuestionLayout question={question} correct={this.correct} selected={this.state.selected > -1 ? this.state.selected: null} answers={answers} pickAnswer={this.pickAnswer} />
 									<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
 								</div>
-								<QuizDrawer open={this.state.openMoneyDrawer} question={this.state.questionNumber}></QuizDrawer>
+								<QuizDrawer open={this.state.openMoneyDrawer} questionNumber={this.state.questionNumber}></QuizDrawer>
 							</div>
 						</div>
 					</div>
