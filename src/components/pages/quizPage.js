@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import MoneyList from '../moneyList';
 import QuestionLayout from '../questionLayout';
 import Logo from '../logo';
+
 const style = {
 	"buttons":{
 		'marginBottom': 10,

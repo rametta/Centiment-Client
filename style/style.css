@@ -97,3 +97,35 @@ body {
     left: -9px;
 }
 
+/* QUIZ STYLES */
+#quiz {
+    width: 100%;
+}
+#answer {
+    cursor: pointer;
+    fill: #293990;
+    stroke: #231f20;
+    strokeMiterlimit: 10;
+}
+#answer:hover {
+    fill: #f9c722;
+}
+
+#question {
+    fill: #293990;
+    stroke: #231f20;
+}
+text {
+    fill: white;
+}
+text:hover{
+    cursor: pointer;
+}
+
+#green {
+    fill: #22f95f;
+}
+
+#red {
+    fill: #f92d22;
+}
