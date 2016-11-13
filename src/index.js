@@ -10,6 +10,7 @@ import LoginPage from './components/pages/loginPage';
 import SignupPage from './components/pages/signupPage';
 import AnalysisPage from './components/pages/analysisPage';
 import ReferencePage from './components/pages/referencePage';
+import CongratsPage from './components/pages/congratsPage';
 
 ReactDOM.render(
   <Router history={browserHistory}>
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Route path="/signup" component={SignupPage}></Route>
       <Route path="/analysis" component={AnalysisPage}></Route>
       <Route path="/references" component={ReferencePage}></Route>
+      <Route path="/congrats" component={CongratsPage}></Route>
     </Route>
   </Router>
   , document.getElementById('root'));

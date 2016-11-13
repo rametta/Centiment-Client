@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
+import {browserHistory} from 'react-router';
 import FlatButton from 'material-ui/FlatButton';
 import MoneyList from '../moneyList';
 import QuestionLayout from '../questionLayout';
 import Logo from '../logo';
+import axios from 'axios';
 
 const style = {
 	"buttons":{
@@ -28,18 +30,30 @@ const style = {
 	{
 		'width': '100%',
 		'height': '100%'
+	},
+	"next":
+	{
+		'backgroundColor': '#00e673',
+	},
+	"restart":
+	{
+		'backgroundColor': '#ff3333'
+	},
+	"lower_button":
+	{
+		'margin':40,
+		'paddingLeft': 30
 	}
 }
 
 var Result = React.createClass({
+
 	render(){
 		return (this.props.visible == 'hidden') ? null :
 		(
-			<div className='text-center' style={style.title}>
-				<h2 >
-
-				</h2>
-				<FlatButton label={this.props.correct? "next": "restart"} onClick={this.props.correct? ()=>{this.props.nextQuestion()} : ()=>{this.props.restart()}} />
+			<div className='text-center' style={style.lower_button}>
+				<FlatButton label={this.props.correct? "next": "restart"} onClick={this.props.correct? ()=>{this.props.nextQuestion()} : ()=>{this.props.restart()}} 
+					style={this.props.correct? style.next : style.restart} />
 			</div>
 		);
 	}
@@ -48,18 +62,26 @@ var Result = React.createClass({
 export default class QuizPage extends Component {
 	constructor(props){
 		super(props);
-		this.data = this.getData();
+		
 		this.correct = false;
-
-		this.state = {
-			questionNumber: 0,
-			showResult: false,
-			//question: data[this.state.questionNumber].question,
-		} 
+		
 
 		this.pickAnswer = this.pickAnswer.bind(this);
 		this.nextQuestion = this.nextQuestion.bind(this);
 		this.restart = this.restart.bind(this);
+
+		this.state = {
+			data: [],
+			questionNumber: 0,
+			showResult: false,
+			done: false,
+			ready:false
+		} 
+	}
+
+	componentWillMount() {
+		console.log('this.state wil mount: ', this.state);
+		this.getData();
 	}
 
 	nextQuestion(){
@@ -73,7 +95,18 @@ export default class QuizPage extends Component {
 	}
 
 	getData(){
-		return [
+		console.log('calling axios');
+		axios.get('http://109.228.59.45:8443/questions')
+			.then((response) => {
+				this.setState({data: response.data, ready: true}, function(){
+					console.log("response: ", this.state.data);
+				});
+			})
+			.catch((error) => {
+				console.log('error:', error);
+			});
+
+		/*return [
 			{
 				answer:0,
 				question: "question one",
@@ -86,11 +119,15 @@ export default class QuizPage extends Component {
 				selected:-1,
 				answers:['a', 'b', 'c', 'd'],
 			}
-		]
+		]*/
 	}
 
 	pickAnswer(num){
-		this.correct = num == this.data[this.state.questionNumber].answer;
+		console.log(num);
+		this.correct = num == this.state.data[this.state.questionNumber].answer;
+		if (this.correct && this.state.questionNumber == 1){
+			browserHistory.push('/congrats');
+		}
 		this.setState({showResult: true});
 	}
 
@@ -102,36 +139,40 @@ export default class QuizPage extends Component {
 
 	answerSelected(){
 		if (this.state.selected > -1)
-			return true;
-		return false;
+			return true;		return false;
 	}
 
 	render() {
-		var answers = this.data[this.state.questionNumber].answers;
-		var question = this.data[this.state.questionNumber].question;
 
-		return (
-			<DocumentTitle title="Quiz">
-				<div>
-					<div className='container'>
-						<div className="row-fluid">
+		if (this.state.ready){
+			console.log('current question: ', this.state.data[this.state.questionNumber]);
+			var answers = this.state.data[this.state.questionNumber].choices;
+			var question = this.state.data[this.state.questionNumber].question;
+			return (
+				<DocumentTitle title="Quiz">
+					<div>
+						<div className='container'>
+							<div className="row-fluid">
 
-							<div className="col-md-10">
-								<Logo />
+								<div className="col-md-10">
+									<Logo />
 
-								<QuestionLayout question={question} answers={answers} pickAnswer={this.pickAnswer} />
-								<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
+									<QuestionLayout question={question} answers={answers} pickAnswer={this.pickAnswer} />
+									<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
 
-							</div>
+								</div>
 
-							<div className="col-md-2 hidden-xs">
-								<MoneyList question={this.state.questionNumber}/>
+								<div className="col-md-2 hidden-xs">
+									<MoneyList question={this.state.questionNumber}/>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</DocumentTitle>
-		)
+				</DocumentTitle>
+		)} else{
+			return <div>Loading..</div>
+		}
+
 	}
 }	
 

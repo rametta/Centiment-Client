@@ -99,13 +99,14 @@ body {
 
 /* QUIZ STYLES */
 #quiz {
-    width: 100%;
+    width: 110%;
 }
 #answer {
     cursor: pointer;
     fill: #293990;
     stroke: #231f20;
     strokeMiterlimit: 10;
+    font-size:0.75em;
 }
 #answer:hover {
     fill: #f9c722;
@@ -117,6 +118,10 @@ body {
 }
 text {
     fill: white;
+    font-size:0.5em;
+}
+text.questionLabel{
+    font-size:1.2em;
 }
 text:hover{
     cursor: pointer;
