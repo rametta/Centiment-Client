@@ -51,7 +51,7 @@ export default class HeadlinesDrawer extends Component {
     this.fetchHeadlines();
     return (
       <Drawer width={300} openSecondary open={this.props.isHeadlinesVisible} >
-        <AppBar title="Live Headlines" onTouchTap={() => this.props.toggleHeadlinesDrawer()} />
+        <AppBar title="Live Headlines" onTouchTap={() => this.props.closeDrawers()} />
         {this.state.loading ? this.loader() : this.renderHeadlines()}
       </Drawer>
     )
