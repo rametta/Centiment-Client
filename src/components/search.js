@@ -8,7 +8,8 @@ import TICKERS from '../symbols';
 
 const YAHOO = 'https://query.yahooapis.com/v1/public/yql?q=';
 const YAHOO_END = '&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
-const SERVER = 'https://shrouded-sands-52424.herokuapp.com/twitter?q=';
+const SERVER = 'http://109.228.59.45:8443/twitter?q=';
+//const SERVER = 'https://shrouded-sands-52424.herokuapp.com/twitter?q=';
 
 export default class Search extends Component {
   constructor() {

@@ -24,7 +24,7 @@ export default class HeadlinesDrawer extends Component {
   }
 
   renderHeadlines() {
-    console.log(this.state.headlines);
+    //console.log(this.state.headlines);
     return this.state.headlines.map((result, i) => {
       let date = new Date(result.webPublicationDate);
       date = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();

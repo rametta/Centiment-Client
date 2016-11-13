@@ -15,8 +15,8 @@ export default class QueestionLayout extends Component {
 	}
 
 	componentWillUpdate(nextProps, nextState){
-		console.log(nextProps);
-		console.log(nextState);
+		//console.log(nextProps);
+		//console.log(nextState);
 		if (this.setState.submitted){
 			this.setState({'submitted': false})
 		}
