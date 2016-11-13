@@ -6,6 +6,7 @@ import MoneyList from '../moneyList';
 import QuestionLayout from '../questionLayout';
 import Logo from '../logo';
 import axios from 'axios';
+import QuizDrawer from '../quizDrawer';
 
 const style = {
 	"buttons":{
@@ -64,7 +65,6 @@ export default class QuizPage extends Component {
 		super(props);
 		
 		this.correct = false;
-
 		this.pickAnswer = this.pickAnswer.bind(this);
 		this.nextQuestion = this.nextQuestion.bind(this);
 		this.restart = this.restart.bind(this);
@@ -73,8 +73,9 @@ export default class QuizPage extends Component {
 			data: [],
 			questionNumber: 0,
 			showResult: false,
+			selected: -1,
 			ready:false,
-			selected: -1
+			openMoneyDrawer: false
 		} 
 	}
 
@@ -84,9 +85,7 @@ export default class QuizPage extends Component {
 	}
 
 	nextQuestion(){
-		this.setState({questionNumber: this.state.questionNumber + 1,
-					'showResult': false,
-					'selected': -1});
+		this.setState({questionNumber: this.state.questionNumber + 1, 'showResult': false, 'selected': -1});
 		console.log('next');
 	}
 
@@ -126,22 +125,25 @@ export default class QuizPage extends Component {
 	pickAnswer(num){
 		console.log(num);
 		this.correct = num == this.state.data[this.state.questionNumber].answer;
+
 		if (this.correct && this.state.questionNumber == 1){
 			browserHistory.push('/congrats');
 		}
-		this.setState({showResult: true,
-						selected: num});
+
+		this.setState({showResult: true, selected: num});
+
+
+		// open money drawer
+		this.openDrawer();
 	}
 
-	setBackground(num){
-		if (this.state.selected == num)
-			return '#42d9f4';
-		return '#ff4d4d';
-	}
-
-	answerSelected(){
-		if (this.state.selected > -1)
-			return true;		return false;
+	openDrawer() {
+		setTimeout(() => {
+			this.setState({openMoneyDrawer: true});
+			setTimeout(() => {
+				this.setState({openMoneyDrawer: false});
+			}, 3000);
+		}, 1000)
 	}
 
 	render() {
@@ -156,17 +158,13 @@ export default class QuizPage extends Component {
 						<div className='container'>
 							<div className="row-fluid">
 
-								<div className="col-md-10">
+								<div className="col-md-12">
 									<Logo />
 
 									<QuestionLayout question={question} correct={this.correct} selected={this.state.selected > -1 ? this.state.selected: null} answers={answers} pickAnswer={this.pickAnswer} />
 									<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
-
 								</div>
-
-								<div className="col-md-2 hidden-xs">
-									<MoneyList question={this.state.questionNumber}/>
-								</div>
+								<QuizDrawer open={this.state.openMoneyDrawer} question={this.state.questionNumber}></QuizDrawer>
 							</div>
 						</div>
 					</div>
