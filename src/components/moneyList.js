@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
 const style={
 	"item:": {
@@ -15,15 +16,9 @@ const style={
 }
 
 export default class MoneyList extends Component {
-	constructor(props){
-		super(props);
-		this.state = {
-			question: this.props.question
-		}
-	}
 
 	checkQuestion(num){
-		if (num == this.state.question){
+		if (num == this.props.question){
 			return {'backgroundColor': '#ff9933'}
 		}
 		return {'backgroundColor': 'white'}
@@ -47,6 +42,7 @@ export default class MoneyList extends Component {
 
 	render() {
 		return (
+
 			<List style={style} className="thumbnail">
 				{this.renderQuestions()};
 			</List>

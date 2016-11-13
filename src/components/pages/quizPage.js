@@ -22,6 +22,11 @@ const style = {
 	"title":
 	{
 		'margin': 40
+	}, 
+	"full":
+	{
+		'width': '100%',
+		'height': '100%'
 	}
 }
 
@@ -108,12 +113,10 @@ export default class QuizPage extends Component {
 			<DocumentTitle title="Quiz">
 				<div>
 					<div className='container'>
-						<div className='row-fluid'>
-						</div>
 						<div className="row-fluid">
 
 							<div className="col-md-10">
-														<Logo />
+								<Logo />
 
 								<QuestionLayout question={question} answers={answers} pickAnswer={this.pickAnswer} />
 								<Result correct={this.correct} visible={this.state.showResult ? 'visible': 'hidden'} nextQuestion={this.nextQuestion} restart={this.restart} />
@@ -121,7 +124,7 @@ export default class QuizPage extends Component {
 							</div>
 
 							<div className="col-md-2 hidden-xs">
-								<MoneyList question="5"/>
+								<MoneyList question={this.state.questionNumber}/>
 							</div>
 						</div>
 					</div>
