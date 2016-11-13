@@ -134,3 +134,10 @@ text:hover{
 #red {
     fill: #f92d22;
 }
+
+.jumbotron-image {
+    height: 290px;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: center;
+}
