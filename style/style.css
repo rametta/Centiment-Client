@@ -160,3 +160,9 @@ text:hover{
 .active-money {
     background-color: #A6CF39;
 }
+
+.lifelines {
+    height: 60px;
+    margin-top: 1em;
+    position: absolute
+}

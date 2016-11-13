@@ -10,7 +10,17 @@ import QuizDrawer from '../quizDrawer';
 
 const style = {
 	"background": {
-		background: 'url("../../../img/game-background.jpg")'
+		background: 'url("../../../img/game-background.jpg")',
+		position: 'fixed',
+		width: '100%',
+		height: '100%'
+	},
+	"questionNumber": {
+		fontSize: '30px',
+		color: 'rgb(255, 255, 255)',
+		marginTop: '30px',
+		position: 'absolute',
+		right: '30px'
 	},
 	"buttons":{
 		'marginBottom': 10,
@@ -160,7 +170,12 @@ export default class QuizPage extends Component {
 					<div style={style.background}>
 						<div className='container'>
 							<div className="row-fluid">
-								<img src="../images/phone.png" />
+								<div>
+									<span><img style={{left: '20px'}} className="lifelines" src="../../../img/phone.png" /></span>
+									<span><img style={{left: '125px'}} className="lifelines" src="../../../img/fifty.png" /></span>
+									<span><img style={{left: '225px'}} className="lifelines" src="../../../img/friend.png" /></span>
+								</div>
+								<div style={style.questionNumber}>Question {this.state.questionNumber + 1}</div>
 							</div>
 							<div className="row-fluid">
 

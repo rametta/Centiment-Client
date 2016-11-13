@@ -13,9 +13,6 @@ export default class QuizDrawer extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('old: ', this.props);
-    console.log('update', nextProps);
-
     if (this.props.questionNumber !== nextProps.questionNumber) {
       this.setState({activeIndex: this.state.activeIndex - 1});
     }
