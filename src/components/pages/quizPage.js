@@ -9,6 +9,9 @@ import axios from 'axios';
 import QuizDrawer from '../quizDrawer';
 
 const style = {
+	"background": {
+		background: 'url("../../../img/game-background.jpg")'
+	},
 	"buttons":{
 		'marginBottom': 10,
 		'borderRadius': 25, 
@@ -154,7 +157,7 @@ export default class QuizPage extends Component {
 			var question = this.state.data[this.state.questionNumber].question;
 			return (
 				<DocumentTitle title="Quiz">
-					<div>
+					<div style={style.background}>
 						<div className='container'>
 							<div className="row-fluid">
 
